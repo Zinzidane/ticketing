@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: zinzidane/auth
+          image: us.gcr.io/ticketing-dev-275618/auth
 ---
 apiVersion: v1
 kind: Service
