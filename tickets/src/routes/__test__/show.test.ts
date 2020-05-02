@@ -2,12 +2,12 @@ import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
 
-it('returns a 400 if invalid ticket id provided', async () => {
-  await request(app)
-    .get(`/api/tickets/asdasas`)
-    .send()
-    .expect(400);
-});
+// it('returns a 400 if invalid ticket id provided', async () => {
+//   await request(app)
+//     .get(`/api/tickets/asdasas`)
+//     .send()
+//     .expect(400);
+// });
 
 it('returns a 404 if the ticket is not found', async () => {
   const id = new mongoose.Types.ObjectId().toHexString();
