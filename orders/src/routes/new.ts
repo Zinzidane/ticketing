@@ -1,8 +1,18 @@
-import express, { Request, Response, Router } from 'express';
+import express, { Request, Response } from 'express';
+import { requireAuth, validateRequest } from '@zzticketing/common';
+import { body } from 'express-validator';
 
 const router = express.Router();
 
-router.post('/api/orders', async (req: Request, res: Response) => {
+router.post('/api/orders',
+  requireAuth,
+  [
+    body('ticketId')
+      .isEmpty()
+      .withMessage('TicketId must be provided')
+  ],
+  validateRequest,
+  async (req: Request, res: Response) => {
   res.send({});
 });
 
