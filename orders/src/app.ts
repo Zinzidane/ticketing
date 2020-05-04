@@ -5,6 +5,12 @@ import cookieSession from 'cookie-session';
 
 import { errorHandler, NotFoundError, currentUser } from '@zzticketing/common';
 
+import { createOrderRouter } from './routes/new';
+import { showOrderRouter } from './routes/show';
+import { indexOrderRouter } from './routes/index';
+import { deleteOrderRouter } from './routes/delete';
+
+
 const app = express();
 app.set('trust proxy', true);
 app.use(json());
@@ -14,6 +20,11 @@ app.use(cookieSession({
 }));
 
 app.use(currentUser);
+
+app.use(indexOrderRouter);
+app.use(createOrderRouter);
+app.use(showOrderRouter);
+app.use(deleteOrderRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
