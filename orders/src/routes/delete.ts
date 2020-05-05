@@ -2,6 +2,9 @@ import express, { Request, Response } from 'express';
 import { requireAuth, NotFoundError, NotAuthorizedError } from '@zzticketing/common';
 
 import { Order, OrderStatus } from '../models/order';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
+import { natsWrapper } from '../nats-wrapper';
+import { Ticket } from '../models/ticket';
 
 const router = express.Router();
 
@@ -24,6 +27,12 @@ router.delete('/api/orders/:orderId',
     await order.save();
 
     // Publish and event saying the order was cancelled
+    new OrderCancelledPublisher(natsWrapper.client).publish({
+      id: order.id,
+      ticket: {
+        id: order.ticket.id
+      }
+    });
 
     res.send(order);
 });
