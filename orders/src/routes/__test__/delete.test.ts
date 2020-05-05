@@ -52,3 +52,5 @@ it('returns and error if one user try to cancel not owned orders', async () => {
     .send()
     .expect(401);
 });
+
+it.todo('emits an order:cancelled event');
