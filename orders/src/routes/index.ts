@@ -1,9 +1,6 @@
 import express, { Request, Response } from 'express';
-import { requireAuth, NotFoundError, BadRequestError } from '@zzticketing/common';
-import { body } from 'express-validator';
-import mongoose from 'mongoose';
+import { requireAuth } from '@zzticketing/common';
 
-import { Ticket } from '../models/ticket';
 import { Order } from '../models/order';
 
 const router = express.Router();
@@ -14,7 +11,7 @@ router.get('/api/orders',
     const orders = await Order.find({
       userId: req.currentUser!.id
     }).populate('ticket');
-    
+
     res.send(orders);
 });
 
