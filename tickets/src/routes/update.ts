@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { requireAuth, validateRequest, NotAuthorizedError, NotFoundError} from '@zzticketing/common';
+import { requireAuth, validateRequest, NotAuthorizedError, NotFoundError, BadRequestError} from '@zzticketing/common';
 import { body } from 'express-validator';
 
 import { Ticket } from '../models/ticket';
@@ -25,6 +25,10 @@ router.put('/api/tickets/:id',
     
     if (!ticket) {
       throw new NotFoundError();
+    }
+
+    if (ticket.orderId) {
+      throw new BadRequestError('Cannot edit a reserved ticket');
     }
 
     if (req.currentUser!.id !== ticket.userId) {
