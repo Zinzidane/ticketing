@@ -31,7 +31,8 @@ router.delete('/api/orders/:orderId',
       id: order.id,
       ticket: {
         id: order.ticket.id
-      }
+      },
+      version: order.version
     });
 
     res.send(order);
