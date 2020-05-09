@@ -22,7 +22,7 @@
     "@types/express": "^4.17.6",
     "@types/jsonwebtoken": "^8.3.9",
     "@types/mongoose": "^5.7.14",
-    "@zzticketing/common": "^1.0.5",
+    "@zzticketing/common": "^1.0.8",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
