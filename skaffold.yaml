@@ -5,12 +5,13 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  # local:
-  #   push: false
-  googleCloudBuild:
-    projectId: ticketing-dev-275618
+  local:
+    push: false
+  # googleCloudBuild:
+  #   projectId: ticketing-dev-275618
   artifacts:
-    - image: us.gcr.io/ticketing-dev-275618/auth
+    # - image: us.gcr.io/ticketing-dev-275618/auth
+    - image: zinzidane/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -18,7 +19,8 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: us.gcr.io/ticketing-dev-275618/tickets
+    # - image: us.gcr.io/ticketing-dev-275618/tickets
+    - image: zinzidane/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -26,7 +28,8 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: us.gcr.io/ticketing-dev-275618/orders
+    # - image: us.gcr.io/ticketing-dev-275618/orders
+    - image: zinzidane/orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -34,7 +37,8 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: us.gcr.io/ticketing-dev-275618/client
+    # - image: us.gcr.io/ticketing-dev-275618/client
+    - image: zinzidane/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -42,8 +46,18 @@ build:
         manual:
           - src: "**/*.js"
             dest: .
-    - image: us.gcr.io/ticketing-dev-275618/expiration
+    # - image: us.gcr.io/ticketing-dev-275618/expiration
+    - image: zinzidane/expiration
       context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    # - image: us.gcr.io/ticketing-dev-275618/payments
+    - image: zinzidane/payments
+      context: payments
       docker:
         dockerfile: Dockerfile
       sync:

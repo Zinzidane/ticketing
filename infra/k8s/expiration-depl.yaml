@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: expiration
-          image: us.gcr.io/ticketing-dev-275618/expiration
+          # image: us.gcr.io/ticketing-dev-275618/expiration
+          image: zinzidane/expiration
           env:
             - name: NATS_URL
               value: "http://nats-srv:4222"
