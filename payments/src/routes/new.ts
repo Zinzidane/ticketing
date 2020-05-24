@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validateRequest, NotFoundError, NotAuthorizedError, OrderStatus, BadRequestError } from '@zzticketing/common';
 import { Order } from '../models/order';
+import { stripe } from '../stripe';
 
 const router = express.Router();
 
@@ -29,9 +30,16 @@ router.post('/api/payments',
       throw new NotAuthorizedError();
     }
 
-    // if (order.status === OrderStatus.Cancelled) {
-    //   throw new BadRequestError('Cannot pay for an cancelled order');
-    // }
+    if (order.status === OrderStatus.Cancelled) {
+      throw new BadRequestError('Cannot pay for an cancelled order');
+    }
+
+    // Stripe works with minimal value. So for the usd it is a cent
+    await stripe.charges.create({
+      currency: 'usd',
+      amount: order.price * 100,
+      source: token
+    });
 
     res.send({ success: true });
 });
